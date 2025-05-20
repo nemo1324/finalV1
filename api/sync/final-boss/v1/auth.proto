@@ -1,0 +1,107 @@
+syntax = "proto3";
+
+package auth;
+
+import "validate/validate.proto";
+import "google/api/annotations.proto";
+
+option go_package = "final/pkg/proto/sync/final-boss/v1;finalv1";
+
+service Auth {
+  rpc Register (RegisterRequest) returns (RegisterResponse) {
+    option (google.api.http) = {
+      post: "/v1/auth/register"
+      body: "*"
+    };
+  }
+
+  rpc Login (LoginRequest) returns (LoginResponse) {
+    option (google.api.http) = {
+      post: "/v1/auth/login"
+      body: "*"
+    };
+  }
+
+  rpc Logout (LogoutRequest) returns (LogoutResponse) {
+    option (google.api.http) = {
+      post: "/v1/auth/logout"
+      body: "*"
+    };
+  }
+
+  rpc GetUser (GetUserRequest) returns (GetUserResponse) {
+    option (google.api.http) = {
+      get: "/v1/auth/user/{id}"
+    };
+  }
+
+  rpc UpdateUser (UpdateUserRequest) returns (UpdateUserResponse) {
+    option (google.api.http) = {
+      put: "/v1/auth/user/{id}"
+      body: "*"
+    };
+  }
+
+  rpc DeleteUser (DeleteUserRequest) returns (DeleteUserResponse) {
+    option (google.api.http) = {
+      delete: "/v1/auth/user/{id}"
+    };
+  }
+}
+
+// --- Сообщения запроса и ответа (примерно так, как было у тебя):
+
+message RegisterRequest {
+  string username = 1 [(validate.rules).string = {
+    min_len: 3,
+    max_len: 30,
+    pattern: "^[a-zA-Z0-9_]+$"
+  }];
+  string password = 2 [(validate.rules).string.min_len = 8];
+}
+
+message RegisterResponse {
+  string user_id = 1;
+}
+
+message LoginRequest {
+  string username = 1 [(validate.rules).string.min_len = 3];
+  string password = 2 [(validate.rules).string.min_len = 8];
+}
+
+message LoginResponse {
+  int64 user_id = 1;
+  string token = 2 [(validate.rules).string.min_len = 1];
+}
+
+message LogoutRequest {
+  int64 user_id = 1;
+}
+
+message LogoutResponse {}
+
+message GetUserRequest {
+  int64 id = 1;
+}
+
+message GetUserResponse {
+  int64 id = 1;
+  string username = 2;
+}
+
+message UpdateUserRequest {
+  int64 id = 1;
+  string username = 2 [(validate.rules).string = {
+    min_len: 3,
+    max_len: 30,
+    pattern: "^[a-zA-Z0-9_]+$"
+  }];
+}
+
+message UpdateUserResponse {}
+
+message DeleteUserRequest {
+  int64 id = 1;
+}
+
+message DeleteUserResponse {}
