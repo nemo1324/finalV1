@@ -1,0 +1,71 @@
+# ---------------------------------------
+# Go
+# ---------------------------------------
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Go modules / workspace
+go.sum
+go.work
+go.work.sum
+
+# Go build artifacts
+/bin/
+/build/
+/dist/
+/final
+main
+
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# ---------------------------------------
+# Environment & Secrets
+# ---------------------------------------
+.env
+.env.*
+*.key
+*.crt
+*.pem
+
+# ---------------------------------------
+# Proto / gRPC
+# ---------------------------------------
+*.pb.go
+*.pb.validate.go
+*.swagger.json
+*.pb.gw.go
+
+# Third-party protos
+googleapis/
+protoc-gen-validate/
+
+# ---------------------------------------
+# Swagger / OpenAPI
+# ---------------------------------------
+/swagger-ui/
+/docs/swagger/
+/web/swagger-ui/
+/web/docs/
+
+# ---------------------------------------
+# Misc
+# ---------------------------------------
+*.log
+.cache/
+*.bak
+*.tmp
+*.lock
+coverage.out
